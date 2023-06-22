@@ -1,0 +1,181 @@
+/* CSS VARIABLES */
+:root {
+  --primary: #141414;
+  --light: #f3f3f3;
+  --dark: #686868;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--primary);
+  color: var(--light);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+
+header {
+  height: 460px;
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(20, 20, 20, 1) 100%
+    ),
+    url('./assets/dark-knight-test.jpg');
+
+  background-size: cover;
+}
+
+nav {
+  padding: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav > img {
+  width: 250px;
+  object-fit: cover;
+  margin-left: 50px;
+}
+
+.nav-links {
+  margin: 10px 0 0 50px;
+}
+
+.nav-links > a {
+  color: var(--light);
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.best-movie {
+  margin: 4rem 10em;
+  width: calc(100% - 100% / 1.6);
+  font-size: medium;
+}
+
+.best-movie > h2 {
+  font-size: 2.5rem;
+}
+
+.best-btn {
+  margin-top: 1.2rem;
+  padding: 7px;
+  background-color: var(--light);
+  border-color: var(--light);
+  border-radius: 5px;
+  color: var(--dark);
+  font-size: medium;
+}
+
+/* MAIN */
+
+main {
+  padding: 0 25px;
+}
+
+section {
+  margin: 35px;
+}
+
+section h1 {
+  margin-left: 4rem;
+}
+
+.carousel-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.carousel-arrow {
+  background-color: var(--dark);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.carousel-items {
+  display: inherit;
+  overflow: hidden;
+}
+
+.scrollable {
+  scroll-behavior: smooth;
+}
+
+.movie-cover:hover {
+  transform: scale(1.1);
+  transition: all 0.5s ease-out;
+  cursor: grab;
+}
+
+/* FOOTER */
+footer {
+  padding: 20px;
+  text-align: center;
+  color: var(--dark);
+  margin: 50px 0 0 0;
+}
+
+.movie-infos-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #949090cb;
+}
+
+.hidden {
+  display: none;
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--primary);
+  border-radius: 25px;
+  height: 268px;
+  width: 60vw;
+}
+
+.movie-infos {
+  padding: 25px;
+}
+
+.movie-cover-info {
+  width: 182px;
+  background: linear-gradient(
+      -90deg,
+      var(--primary) 0%,
+      rgba(255, 255, 255, 0) 30%
+    ),
+    url('https://shorturl.at/oG056');
+
+  background-size: cover;
+  border-radius: 25px 0 0 25px;
+}
+
+.close-btn {
+  position: relative;
+  margin-left: auto;
+  top: 10px;
+  right: 15px;
+}
