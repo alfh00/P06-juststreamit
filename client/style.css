@@ -14,6 +14,7 @@ body {
   background-color: var(--primary);
   color: var(--light);
   font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
 
 /* HEADER */
@@ -26,7 +27,7 @@ header {
       rgba(255, 255, 255, 0) 35%,
       rgba(20, 20, 20, 1) 100%
     ),
-    url('./assets/dark-knight-test.jpg');
+    url('https://wallpaperaccess.com/full/1561985.jpg');
 
   background-size: cover;
 }
@@ -110,7 +111,14 @@ section h1 {
 
 .carousel-items {
   display: inherit;
+  padding: 15px;
+  gap: 5px;
   overflow: hidden;
+}
+
+.carousel-items img {
+  width: 182px;
+  height: 268px;
 }
 
 .scrollable {
@@ -131,7 +139,7 @@ footer {
   margin: 50px 0 0 0;
 }
 
-.movie-infos-container {
+.movie-card-container {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -150,27 +158,38 @@ footer {
 .movie-card {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   background-color: var(--primary);
   border-radius: 25px;
-  height: 268px;
-  width: 60vw;
+  height: 75vh;
+  max-width: 75vw;
 }
 
-.movie-infos {
-  padding: 25px;
+.movie-infos-head {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
-.movie-cover-info {
-  width: 182px;
-  background: linear-gradient(
-      -90deg,
-      var(--primary) 0%,
-      rgba(255, 255, 255, 0) 30%
-    ),
-    url('https://shorturl.at/oG056');
+.movie-card-infos img {
+  width: 200px;
+  border-radius: 25px 0 0 0;
+}
 
-  background-size: cover;
-  border-radius: 25px 0 0 25px;
+.movie-details {
+  padding: 0 25px;
+}
+
+.details-list {
+  list-style-type: none;
+}
+
+.movie-synopsis {
+  margin: 0 35px;
+}
+
+li span {
+  font-weight: bold;
 }
 
 .close-btn {
@@ -178,4 +197,5 @@ footer {
   margin-left: auto;
   top: 10px;
   right: 15px;
+  fill: #686868;
 }

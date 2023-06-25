@@ -1,21 +1,11 @@
-const bestMoviesURL = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score'
 const categoriesURL = 'http://localhost:8000/api/v1/genres/'
 
 const closeBtn = document.querySelector('.close-btn')
-const movieWin = document.querySelector('.movie-infos-container')
 const scrollables = document.querySelectorAll('.scrollable')
 const movieCovers = document.querySelectorAll('.movie-cover')
 const carouselBtns = document.querySelectorAll('.carousel-arrow')
 const sections = document.querySelectorAll('.cat-section')
-
-async function getData(url) {
-  try {
-    const response = await axios.get(url)
-    return response.data
-  } catch (error) {
-    console.error(error)
-  }
-}
+const modalWin = document.querySelector('.movie-card-container')
 
 // adding scroll behavior to buttons
 for (const carouselBtn of carouselBtns) {
@@ -44,29 +34,90 @@ for (const scrollable of scrollables) {
 
 // fetching data for floating movie window
 for (const movieCover of movieCovers) {
-  movieCover.addEventListener('click', () => {
-    // fetch movie data and show it
-    movieWin.classList.toggle('hidden')
+  movieCover.addEventListener('click', async () => {
+    const id = movieCover.getAttribute('id')
+    const movieData = (
+      await axios.get(`http://localhost:8000/api/v1/titles/${id}`)
+    ).data
+    console.log(movieData)
+    const movieCardInfos = document.querySelector('.movie-card-infos')
+    movieCardInfos.innerHTML = `
+    <div class="movie-infos-head">
+            <img src=${movieData.image_url} alt="">
+            
+            <div class="movie-details">
+              <h3>${movieData.title}</h3>
+              <ul class="details-list">
+                <li><span>Genre: </span>${movieData.genres.join(', ')}</li>
+                <li><span>Date de sortie: </span>${
+                  movieData.date_published
+                }</li>
+                <li><span>Note: </span>${movieData.reviews_from_users}</li>
+                <li><span>Score IMDB: </span>${movieData.imdb_score}</li>
+                <li><span>Durée: </span>${movieData.duration}</li>
+                <li><span>Résultat Box Office: </span>${
+                  movieData.worldwide_gross_income + ' $' || 'inconu'
+                }</li>
+                <li><span>Pays: </span>${movieData.countries.join(' ,')}</li>
+                <li><span>Réalisateur: </span>${movieData.directors.join(
+                  ', '
+                )}</li>
+                <li><span>Acteurs: </span>${
+                  movieData.actors.join(', ').slice(0, 30) + '...'
+                }</li>
+              </ul>
+            </div>  
+          </div>
+            
+          <div class="movie-synopsis">
+              <h4>Synopsis:</h4>
+              <p>${movieData.long_description.slice(0, 433) + '...'}</p>
+          </div>`
+    modalWin.classList.toggle('hidden')
   })
 }
 
 // closing button action for floating movie window
 closeBtn.addEventListener('click', () => {
-  movieWin.classList.toggle('hidden')
+  modalWin.classList.toggle('hidden')
 })
 
-for (const section of sections) {
-  const sectionTitle = section.querySelector('h1').innerHTML
-  const sectionMovieCovers = section.querySelectorAll('.movie-cover')
-  const bestMoviesData = async () => {
-    await getData(bestMoviesURL)
+async function fetchSectionsData() {
+  for (const section of sections) {
+    const sectionTitle = section.querySelector('h1').innerHTML
+    const movieCovers = section.querySelectorAll('.movie-cover')
+    let fetchingUrl = ''
+    if (sectionTitle === 'Les Mieux Notés') {
+      fetchingUrl = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score'
+    } else if (sectionTitle === 'Sci-Fi') {
+      fetchingUrl =
+        'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=sci-fi'
+    } else if (sectionTitle === 'Comedie') {
+      fetchingUrl =
+        'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=comedy'
+    } else if (sectionTitle === 'Mystère') {
+      fetchingUrl =
+        'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=mystery'
+    }
+
+    let moviesData = []
+
+    while (moviesData.length < 7) {
+      try {
+        const response = await axios.get(fetchingUrl)
+        moviesData = moviesData.concat(response.data.results)
+        bestMoviesURL = response.data.next
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    let i = 1
+    for (const movieCover of movieCovers) {
+      movieCover.setAttribute('id', moviesData[i].id)
+      movieCover.src = moviesData[i].image_url
+      i++
+    }
   }
-  console.log(bestMoviesData)
-  // if (sectionTitle === 'Les Mieux Notés') {
-  //   for (const SectionImg of SectionImgs){
-  //   }
-  //   for (const sectionMovieCover of sectionMovieCovers) {
-  //     sectionMovieCover.nextElementSibling.src =
-  //   }
-  // }
 }
+
+fetchSectionsData()
