@@ -56,9 +56,17 @@ nav > img {
 }
 
 .best-movie {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 4rem 10em;
-  width: calc(100% - 100% / 1.6);
   font-size: medium;
+}
+
+.best-movie-cover img {
+  margin-left: 20rem;
+  margin-right: 2rem;
+  width: 182px;
 }
 
 .best-movie > h2 {

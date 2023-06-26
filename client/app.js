@@ -6,6 +6,22 @@ const movieCovers = document.querySelectorAll('.movie-cover')
 const carouselBtns = document.querySelectorAll('.carousel-arrow')
 const sections = document.querySelectorAll('.cat-section')
 const modalWin = document.querySelector('.movie-card-container')
+const bestMovie = document.querySelector('.best-movie')
+
+const updateBestMove = async () => {
+  try {
+    let bestMovieData = (
+      await axios.get(
+        'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score'
+      )
+    ).data.results[0]
+
+    const { title, image_url } = bestMovie
+    console.log(bestMovie)
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // adding scroll behavior to buttons
 for (const carouselBtn of carouselBtns) {
@@ -120,4 +136,5 @@ async function fetchSectionsData() {
   }
 }
 
+updateBestMove()
 fetchSectionsData()
