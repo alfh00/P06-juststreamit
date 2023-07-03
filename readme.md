@@ -1,4 +1,6 @@
-# Project Readme
+# JustStreamIt Readme
+
+<img src='./client/assets/logo /'>
 
 This project is a web application that fetches movie data from an API and displays it in various sections on the website. It allows users to scroll through movie categories, view details about individual movies, and interact with a floating movie window.
 
