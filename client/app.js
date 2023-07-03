@@ -2,22 +2,31 @@ const categoriesURL = 'http://localhost:8000/api/v1/genres/'
 
 const closeBtn = document.querySelector('.close-btn')
 const scrollables = document.querySelectorAll('.scrollable')
-const movieCovers = document.querySelectorAll('.movie-cover')
 const carouselBtns = document.querySelectorAll('.carousel-arrow')
 const sections = document.querySelectorAll('.cat-section')
 const modalWin = document.querySelector('.movie-card-container')
-const bestMovie = document.querySelector('.best-movie')
+const bestMovieInfo = document.querySelector('.best-movie-info')
 
 const updateBestMove = async () => {
   try {
-    let bestMovieData = (
+    const bestMovieId = (
       await axios.get(
         'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score'
       )
-    ).data.results[0]
+    ).data.results[0].id
 
-    const { title, image_url } = bestMovie
-    console.log(bestMovie)
+    const bestMovieData = (
+      await axios.get(`http://localhost:8000/api/v1/titles/${bestMovieId}`)
+    ).data
+
+    const { id, title, image_url, description } = bestMovieData
+    const [elTitle, elDesc, elBtn] = bestMovieInfo.children
+    elTitle.innerHTML = title
+    elDesc.innerHTML = description
+    elBtn.id = id
+
+    const bestImg = bestMovieInfo.nextElementSibling
+    bestImg.innerHTML = `<img src=${image_url} alt=${title}>`
   } catch (error) {
     console.error(error)
   }
@@ -48,6 +57,12 @@ for (const scrollable of scrollables) {
   })
 }
 
+// selecting all clickable items
+let movieCovers = [
+  ...document.querySelectorAll('.movie-cover'),
+  ...document.querySelectorAll('.best-btn'),
+]
+
 // fetching data for floating movie window
 for (const movieCover of movieCovers) {
   movieCover.addEventListener('click', async () => {
@@ -55,7 +70,7 @@ for (const movieCover of movieCovers) {
     const movieData = (
       await axios.get(`http://localhost:8000/api/v1/titles/${id}`)
     ).data
-    console.log(movieData)
+
     const movieCardInfos = document.querySelector('.movie-card-infos')
     movieCardInfos.innerHTML = `
     <div class="movie-infos-head">
