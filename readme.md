@@ -54,16 +54,3 @@ This project requires the following dependency:
 - [axios](https://github.com/axios/axios): A library for making HTTP requests.
 
 Make sure to install the dependencies before running the project.
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvement, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-- The project uses the axios library for making HTTP requests.
-- The movie data is fetched from an external API.
